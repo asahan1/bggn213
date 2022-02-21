@@ -1,0 +1,249 @@
+---
+title: "Class7.Rmd"
+author: "Ayse"
+date: "2/9/2022"
+output: pdf_document
+---
+##Introduction to machine learning: 
+unsupervised, supervised, and reinforcement learning. We will learn 2 clustering methods - K.means and hierarchical clustering. We will also learn how to find patterns in high dimensional data:  dimensionality reduction, visualization, and structure analysis (PCA).
+
+#Generating random data in a normal distrubtion
+```{r}
+hist(rnorm(10000, mean=3))
+```
+
+# generating data for K means testing
+```{r}
+#generate tmp vector from two normal distributions of mean 30, sd -3 or 3
+tmp <- c(rnorm(30, -3), rnorm(30, 3))
+#use column bind - bind tmp data and reverse of tmp data as 2 columns
+n <- cbind(x=tmp, y=rev(tmp))
+plot(n)
+```
+
+A limitation of kmeans is that we have to tell it how many clusters we want. nstart - point where distance of the points in dataset is calculated
+```{r}
+k <- kmeans(n, centers=2, nstart = 10)
+k
+```
+the available components can be called from the list using $. for example, how many points are in each cluster?
+
+```{r}
+k$size
+```
+
+What are the centroids of each cluster?
+```{r}
+k$centers
+```
+Determining cluster assignment and plotting x colored by kmeans cluster assignment and cluster centers as blue points
+```{r}
+#cluster is the membership factor - indicates the cluster to which each point is allocated
+a <- k$cluster
+
+plot(n, col=a)
+```
+```{r}
+k <- kmeans(n, 4, 10)
+plot(n, col=k$cluster)
+```
+
+#Hierarchical clustering
+hclust - must give hclust a distance matrix, not raw data, that can be made using dist(x) 
+```{r}
+hc <- hclust(dist(n))
+hc
+
+```
+```{r}
+#will make a dendogram showing clusters
+plot(hc)
+abline(h=10, col="red")
+```
+cut tree to get cluster membership vector
+```{r}
+grps <- cutree(hc, k=2)
+plot(n, col=grps)
+```
+
+
+##Lab class7
+import data
+Q1: there are 5 columns and 17 rows.
+```{r}
+url <- "https://tinyurl.com/UK-foods"
+x <- read.csv(url)
+dim(x)
+head(x)
+```
+Fixing row names (should have 4 variables, but x has been counted as a variable )
+```{r}
+rownames(x) <- x[,1]
+x <- x[,-1]
+head(x)
+dim(x)
+```
+
+Q2: I would prefer the row.names() argument being used, this will be more robust.
+
+Visualize the data in a bar plot
+```{r}
+barplot(as.matrix(x), beside=T, col=rainbow(nrow(x)))
+```
+Q3: For a stacked plot, we can set the argument beside to FALSE
+```{r}
+barplot(as.matrix(x), beside=F, col=rainbow(nrow(x)))
+```
+Q5: Generating all pairwise plots may help somewhat. Can you make sense of the following code and resulting figure? What does it mean if a given point lies on the diagonal for a given plot?
+```{r}
+pairs(x, col=rainbow(10), pch=16)
+```
+For the plot above, it is a matrix of scatterplots. It is plotting row values (different colored points) with values for one country on the x axis and the other on the y axis. Points on the diagonal will indicate nearly identical values for each country - that particular food is consumed in similar amounts in the two countries being plotted.
+Q6. What is the main differences between N. Ireland and the other countries of the UK in terms of this data-set?
+I can already see that any plot including values from N. Ireland has fewer points close to or on the diagonal than the other pairs of countries. The consumptoin of various food in N. Ireland seems to be different from the other countries (compared to when those countries are compared to one another)
+
+#PCA
+prcomp() is a base R function that performs pca - observations are rows and variables are columns. We need to transpose our data.
+```{r}
+pca <- prcomp(t(x))
+summary(pca)
+```
+The principal components are listed in order of importance above. PC1 accounts for more than 67% of the variance in the data, PC2 for 29%, and PC1 and PC2 together to >96%. 
+#score plot
+The x in pca is what we want to plot tbe score plot below.
+
+```{r}
+plot(pca$x[,1], pca$x[,2], xlab="PC1", ylab="PC2", xlim=c(-270,500), pch=19)
+
+text(pca$x[,1], pca$x[,2], colnames(x), col=c("orange", "red", "blue", "green"))
+```
+looking at how much variation each PC accounts for and summarizing it in a bar plot
+```{r}
+v <- round( pca$sdev^2/sum(pca$sdev^2) * 100 )
+v
+barplot(v, xlab="Principal Component", ylab="Percent Variation")
+```
+
+Next, we can check the influence of each row on a principal component.
+
+```{r}
+#to specify margins, without this the row names are cutoff
+par(mar=c(10, 3, 0.35, 0))
+#make barplot of of the influence of each row on pc1
+barplot( pca$rotation[,1], las=2 )
+```
+fresh potatoes, soft drinks, fresh fruit ,and alcoholic drinks are influencing pc1 the most
+
+loadings plot for pc2:
+```{r}
+#to specify margins, without this the row names are cutoff
+par(mar=c(10, 3, 0.35, 0))
+#make barplot of of the influence of each row on pc1
+barplot( pca$rotation[,2], las=2 )
+```
+Q9: Generate a similar ‘loadings plot’ for PC2. What two food groups feature prominantely and what does PC2 maninly tell us about?
+The most prominent foods are soft drinks and fresh potatoes, meaning that these are the rows that are most prominently influencing PC2. Based on this information, PC2 is telling us that the fresh potatoes characteristic is contributing to moving N. Ireland away from the other countries (more consumption in Ireland vs. other countries), and soft drinks is moving the other countries away from N. Ireland (less consumption in N. Ireland vs. other countries). This accounts for the second greatest amount of variance in the dataset.
+
+#biplots
+This combines the loading plot and pca plot, is mainly useful for small datasets
+```{r}
+biplot(pca)
+```
+
+##PCA of RNAseq
+Load data
+```{r}
+url2 <- "https://tinyurl.com/expression-CSV"
+rna.data <- read.csv(url2, row.names=1)
+dim(rna.data)
+```
+Q10: How many genes and samples are in this data set? There are 10 samples and 
+100 genes.
+
+```{r}
+## use t(data) 
+pca <- prcomp(t(rna.data), scale=TRUE)
+ 
+## score plot
+plot(pca$x[,1], pca$x[,2], xlab="PC1", ylab="PC2")
+```
+
+```{r}
+summary(pca)
+```
+We can see that PC1 is accounting for >92% of the variance, and PC1 and PC2 together to greater than >94%.
+Lets make scree plot for this
+```{r}
+plot(pca, main="Quick scree plot")
+```
+
+We can alternatively look at sdev (standard deviation) in pca to check how much variation each pc accounts for
+
+```{r}
+## Variance captured per PC 
+pca.var <- pca$sdev^2
+
+## Percent variance is often more informative to look at 
+pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
+pca.var.per
+
+#now plot it
+barplot(pca.var.per, main="Scree Plot", 
+        names.arg = paste0("PC", 1:10),
+        xlab="Principal Component", ylab="Percent Variation")
+```
+
+We will re-make the original score plot in a nicer way. First, we can make vectors of colors for the two types of samples (WT and KO)
+
+```{r}
+colvec <- colnames(rna.data)
+colvec[grep("wt", colvec)] <- "red"
+colvec[grep("ko", colvec)] <- "blue"
+
+#then plot, add labels showing percent variance each pc accounts for and of each sample
+plot(pca$x[,1], pca$x[,2], col=colvec, pch=16,
+     xlab=paste0("PC1 (", pca.var.per[1], "%)"),
+     ylab=paste0("PC2 (", pca.var.per[2], "%)"))
+
+text(pca$x[,1], pca$x[,2], labels = colnames(rna.data), pos=c(rep(4,5), rep(2,5)))
+```
+
+##using ggplot
+for ggplot, we need to turn our data into dataframe
+```{r}
+#need to first install and load ggplot (if not already installed)
+library(ggplot2)
+
+df <- as.data.frame(pca$x)
+df$samples <- colnames(rna.data) 
+df$condition <- substr(colnames(rna.data),1,2)
+
+p <- ggplot(df) + 
+        aes(PC1, PC2, label=samples, col=condition) + 
+        geom_label(show.legend = FALSE)
+
+p
+```
+Add labels, make plot prettier
+```{r}
+p + labs(title="PCA of RNASeq Data",
+       subtitle = "PC1 clealy seperates wild-type from knock-out samples",
+       x=paste0("PC1 (", pca.var.per[1], "%)"),
+       y=paste0("PC2 (", pca.var.per[2], "%)"),
+       caption="BIMM143 example data") +
+     theme_bw()
+```
+
+We can find the top 10 genes that contribute to the most variation in PC1
+
+```{r}
+loading_scores <- pca$rotation[,1]
+
+gene_scores <- abs(loading_scores) 
+gene_score_ranked <- sort(gene_scores, decreasing=TRUE)
+
+#show the names of the top 10 genes
+top_10_genes <- names(gene_score_ranked[1:10])
+top_10_genes 
+```
+
