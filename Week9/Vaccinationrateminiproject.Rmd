@@ -1,0 +1,90 @@
+---
+title: "Class14"
+author: "Ayse"
+date: '2022-02-24'
+output:
+  html_document: default
+  pdf_document: default
+---
+```{r}
+# Import vaccination data
+vax <- read.csv("covid19vaccinesbyzipcode_test.csv")
+head(vax)
+```
+
+
+    Q1. What column details the total number of people fully vaccinated?
+column 9
+   
+    Q2. What column details the Zip code tabulation area?
+column 2
+
+    Q3. What is the earliest date in this dataset?
+January 5 2021
+
+    Q4. What is the latest date in this dataset?
+February 22, 2022
+```{r}
+#overview
+#install.packages("skimr")
+library(skimr)
+skimr::skim(vax)
+```
+
+    Q5. How many numeric columns are in this dataset?
+9
+
+    Q6. Note that there are “missing values” in the dataset. How many NA values there in the persons_fully_vaccinated column?
+18174
+
+    Q7. What percent of persons_fully_vaccinated values are missing (to 2 significant figures)? 
+17%
+```{r}
+fv_na <- sum( is.na(vax$persons_fully_vaccinated) )
+(fv_na/length(vax$persons_fully_vaccinated))*100
+```
+#working with dates
+
+Q9. How many days have passed since the last update of the dataset? 0
+Q10. How many unique dates are in the dataset (i.e. how many different dates are detailed)?  413
+```{r}
+#install.packages("tidyverse")
+library(lubridate)
+vax$as_of_date <- ymd(vax$as_of_date)
+today () - vax$asofdate[1]
+vax$as_of_date[nrow(vax)] - vax$as_of_date[1]
+```
+ 
+#working with zipcodes
+```{r}
+#install.packages("zipcodeR")
+library(zipcodeR)
+geocode_zip('92037')
+zip_distance('92037','92109')
+reverse_zipcode(c('92037', "92109") )
+```
+
+    Q11. How many distinct zip codes are listed for San Diego County? 6420
+    Q12. What San Diego County Zip code area has the largest 12 + Population in this dataset?
+
+
+```{r}
+library(dplyr)
+
+sd <- filter(vax, county == "San Diego")
+
+nrow(sd)
+
+sd.10 <- filter(vax, county == "San Diego" &
+                age5_plus_population > 10000)
+
+uni <- length(unique(sd))
+```
+
+Q13. What is the overall average “Percent of Population Fully Vaccinated” value for all San Diego “County” as of “2022-02-22”? 
+```{r}
+avg <- mean(sd$percent_of_population_fully_vaccinated)
+```
+
+
+Q14. Using either ggplot or base R graphics make a summary figure that shows the distribution of Percent of Population Fully Vaccinated values as of “2022-02-22”?

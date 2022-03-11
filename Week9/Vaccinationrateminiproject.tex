@@ -1,0 +1,519 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Class14},
+  pdfauthor={Ayse},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Class14}
+\author{Ayse}
+\date{2022-02-24}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Import vaccination data}
+\NormalTok{vax }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"covid19vaccinesbyzipcode\_test.csv"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(vax)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   as_of_date zip_code_tabulation_area local_health_jurisdiction        county
+## 1 2021-01-05                    92140                 San Diego     San Diego
+## 2 2021-01-05                    94133             San Francisco San Francisco
+## 3 2021-01-05                    94523              Contra Costa  Contra Costa
+## 4 2021-01-05                    94005                 San Mateo     San Mateo
+## 5 2021-01-05                    94104             San Francisco San Francisco
+## 6 2021-01-05                    94549              Contra Costa  Contra Costa
+##   vaccine_equity_metric_quartile                 vem_source
+## 1                             NA            No VEM Assigned
+## 2                              3 Healthy Places Index Score
+## 3                              4 Healthy Places Index Score
+## 4                              4 Healthy Places Index Score
+## 5                             NA            No VEM Assigned
+## 6                              4 Healthy Places Index Score
+##   age12_plus_population age5_plus_population persons_fully_vaccinated
+## 1                3747.7                 3737                       NA
+## 2               25070.5                25957                       NA
+## 3               30457.9                32828                       NA
+## 4                3996.1                 4364                       NA
+## 5                 387.8                  399                       NA
+## 6               25393.8                28468                       NA
+##   persons_partially_vaccinated percent_of_population_fully_vaccinated
+## 1                           NA                                     NA
+## 2                           NA                                     NA
+## 3                           NA                                     NA
+## 4                           NA                                     NA
+## 5                           NA                                     NA
+## 6                           NA                                     NA
+##   percent_of_population_partially_vaccinated
+## 1                                         NA
+## 2                                         NA
+## 3                                         NA
+## 4                                         NA
+## 5                                         NA
+## 6                                         NA
+##   percent_of_population_with_1_plus_dose booster_recip_count
+## 1                                     NA                  NA
+## 2                                     NA                  NA
+## 3                                     NA                  NA
+## 4                                     NA                  NA
+## 5                                     NA                  NA
+## 6                                     NA                  NA
+##                                                                redacted
+## 1 Information redacted in accordance with CA state privacy requirements
+## 2 Information redacted in accordance with CA state privacy requirements
+## 3 Information redacted in accordance with CA state privacy requirements
+## 4 Information redacted in accordance with CA state privacy requirements
+## 5 Information redacted in accordance with CA state privacy requirements
+## 6 Information redacted in accordance with CA state privacy requirements
+\end{verbatim}
+
+\begin{verbatim}
+Q1. What column details the total number of people fully vaccinated?
+\end{verbatim}
+
+column 9
+
+\begin{verbatim}
+Q2. What column details the Zip code tabulation area?
+\end{verbatim}
+
+column 2
+
+\begin{verbatim}
+Q3. What is the earliest date in this dataset?
+\end{verbatim}
+
+January 5 2021
+
+\begin{verbatim}
+Q4. What is the latest date in this dataset?
+\end{verbatim}
+
+February 22, 2022
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#overview}
+\CommentTok{\#install.packages("skimr")}
+\FunctionTok{library}\NormalTok{(skimr)}
+\NormalTok{skimr}\SpecialCharTok{::}\FunctionTok{skim}\NormalTok{(vax)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+\endhead
+Name & vax \\
+Number of rows & 105840 \\
+Number of columns & 15 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+character & 5 \\
+numeric & 10 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: character}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.3095}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1190}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0476}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0476}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.0714}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1071}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1310}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+min
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+max
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+empty
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_unique
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+whitespace
+\end{minipage} \\
+\midrule
+\endhead
+as\_of\_date & 0 & 1 & 10 & 10 & 0 & 60 & 0 \\
+local\_health\_jurisdiction & 0 & 1 & 0 & 15 & 300 & 62 & 0 \\
+county & 0 & 1 & 0 & 15 & 300 & 59 & 0 \\
+vem\_source & 0 & 1 & 15 & 26 & 0 & 3 & 0 \\
+redacted & 0 & 1 & 2 & 69 & 0 & 2 & 0 \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.3233}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0752}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1053}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0451}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0677}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0451}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+hist
+\end{minipage} \\
+\midrule
+\endhead
+zip\_code\_tabulation\_area & 0 & 1.00 & 93665.11 & 1817.39 & 90001 &
+92257.75 & 93658.50 & 95380.50 & 97635.0 & ▃▅▅▇▁ \\
+vaccine\_equity\_metric\_quartile & 5220 & 0.95 & 2.44 & 1.11 & 1 & 1.00
+& 2.00 & 3.00 & 4.0 & ▇▇▁▇▇ \\
+age12\_plus\_population & 0 & 1.00 & 18895.04 & 18993.92 & 0 & 1346.95 &
+13685.10 & 31756.12 & 88556.7 & ▇▃▂▁▁ \\
+age5\_plus\_population & 0 & 1.00 & 20875.24 & 21106.02 & 0 & 1460.50 &
+15364.00 & 34877.00 & 101902.0 & ▇▃▂▁▁ \\
+persons\_fully\_vaccinated & 18174 & 0.83 & 12064.29 & 12983.91 & 11 &
+1059.00 & 7287.50 & 19859.00 & 77213.0 & ▇▃▁▁▁ \\
+persons\_partially\_vaccinated & 18174 & 0.83 & 820.71 & 1318.77 & 11 &
+76.00 & 370.00 & 1066.00 & 31869.0 & ▇▁▁▁▁ \\
+percent\_of\_population\_fully\_vaccinated & 18174 & 0.83 & 0.51 & 0.26
+& 0 & 0.33 & 0.54 & 0.70 & 1.0 & ▅▅▇▇▃ \\
+percent\_of\_population\_partially\_vaccinated & 18174 & 0.83 & 0.05 &
+0.09 & 0 & 0.01 & 0.03 & 0.05 & 1.0 & ▇▁▁▁▁ \\
+percent\_of\_population\_with\_1\_plus\_dose & 18174 & 0.83 & 0.54 &
+0.27 & 0 & 0.35 & 0.58 & 0.75 & 1.0 & ▅▃▆▇▅ \\
+booster\_recip\_count & 64191 & 0.39 & 3923.43 & 5704.10 & 11 & 169.00 &
+1072.00 & 5803.00 & 49951.0 & ▇▁▁▁▁ \\
+\bottomrule
+\end{longtable}
+
+\begin{verbatim}
+Q5. How many numeric columns are in this dataset?
+\end{verbatim}
+
+9
+
+\begin{verbatim}
+Q6. Note that there are “missing values” in the dataset. How many NA values there in the persons_fully_vaccinated column?
+\end{verbatim}
+
+18174
+
+\begin{verbatim}
+Q7. What percent of persons_fully_vaccinated values are missing (to 2 significant figures)? 
+\end{verbatim}
+
+17\%
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fv\_na }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{( }\FunctionTok{is.na}\NormalTok{(vax}\SpecialCharTok{$}\NormalTok{persons\_fully\_vaccinated) )}
+\NormalTok{(fv\_na}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(vax}\SpecialCharTok{$}\NormalTok{persons\_fully\_vaccinated))}\SpecialCharTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17.1712
+\end{verbatim}
+
+\#working with dates
+
+Q9. How many days have passed since the last update of the dataset? 0
+Q10. How many unique dates are in the dataset (i.e.~how many different
+dates are detailed)? 413
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("tidyverse")}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vax}\SpecialCharTok{$}\NormalTok{as\_of\_date }\OtherTok{\textless{}{-}} \FunctionTok{ymd}\NormalTok{(vax}\SpecialCharTok{$}\NormalTok{as\_of\_date)}
+\FunctionTok{today}\NormalTok{ () }\SpecialCharTok{{-}}\NormalTok{ vax}\SpecialCharTok{$}\NormalTok{asofdate[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Date of length 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vax}\SpecialCharTok{$}\NormalTok{as\_of\_date[}\FunctionTok{nrow}\NormalTok{(vax)] }\SpecialCharTok{{-}}\NormalTok{ vax}\SpecialCharTok{$}\NormalTok{as\_of\_date[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Time difference of 413 days
+\end{verbatim}
+
+\#working with zipcodes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("zipcodeR")}
+\FunctionTok{library}\NormalTok{(zipcodeR)}
+\FunctionTok{geocode\_zip}\NormalTok{(}\StringTok{\textquotesingle{}92037\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   zipcode   lat   lng
+##   <chr>   <dbl> <dbl>
+## 1 92037    32.8 -117.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{zip\_distance}\NormalTok{(}\StringTok{\textquotesingle{}92037\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}92109\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   zipcode_a zipcode_b distance
+## 1     92037     92109     2.33
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{reverse\_zipcode}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}92037\textquotesingle{}}\NormalTok{, }\StringTok{"92109"}\NormalTok{) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 24
+##   zipcode zipcode_type major_city post_office_city common_city_list county state
+##   <chr>   <chr>        <chr>      <chr>                      <blob> <chr>  <chr>
+## 1 92037   Standard     La Jolla   La Jolla, CA           <raw 20 B> San D~ CA   
+## 2 92109   Standard     San Diego  San Diego, CA          <raw 21 B> San D~ CA   
+## # ... with 17 more variables: lat <dbl>, lng <dbl>, timezone <chr>,
+## #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
+## #   population_density <dbl>, land_area_in_sqmi <dbl>,
+## #   water_area_in_sqmi <dbl>, housing_units <int>,
+## #   occupied_housing_units <int>, median_home_value <int>,
+## #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>,
+## #   bounds_north <dbl>, bounds_south <dbl>
+\end{verbatim}
+
+\begin{verbatim}
+Q11. How many distinct zip codes are listed for San Diego County? 6420
+Q12. What San Diego County Zip code area has the largest 12 + Population in this dataset?
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sd }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(vax, county }\SpecialCharTok{==} \StringTok{"San Diego"}\NormalTok{)}
+
+\FunctionTok{nrow}\NormalTok{(sd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6420
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sd}\FloatTok{.10} \OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(vax, county }\SpecialCharTok{==} \StringTok{"San Diego"} \SpecialCharTok{\&}
+\NormalTok{                age5\_plus\_population }\SpecialCharTok{\textgreater{}} \DecValTok{10000}\NormalTok{)}
+
+\NormalTok{uni }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(sd))}
+\end{Highlighting}
+\end{Shaded}
+
+Q13. What is the overall average ``Percent of Population Fully
+Vaccinated'' value for all San Diego ``County'' as of ``2022-02-22''?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{avg }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(sd}\SpecialCharTok{$}\NormalTok{percent\_of\_population\_fully\_vaccinated)}
+\end{Highlighting}
+\end{Shaded}
+
+Q14. Using either ggplot or base R graphics make a summary figure that
+shows the distribution of Percent of Population Fully Vaccinated values
+as of ``2022-02-22''?
+
+\end{document}
